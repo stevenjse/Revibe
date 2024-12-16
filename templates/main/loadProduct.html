@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subir Artículo | Re-Vibe</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .img-preview {
+            position: relative;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .img-preview img {
+            max-width: 150px;
+            max-height: 150px;
+        }
+
+        .img-preview .remove-img {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 0 5px;
+            border-radius: 50%;
+            font-size: 12px;
+            line-height: 1;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+    <link rel="icon" href="{{ url_for('static', filename='assets/img/logo/revibes.svg') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+
+    <!--HEADER-->
+    <header class="top-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-6 col-sm-6 col-md-3">
+                    <a>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10" />
+                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                        </svg>
+                        Cuenca, Ecuador, 010101
+                    </a>
+                </div>
+                <div class="col-6 col-sm-6 col-md-3 ms-auto text-end">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('dashboard')}}" class="text-decoration-none text-white">{{ current_user.nombre
+                        }}</a>
+                    <a href="{{ url_for('logout') }}" class="text-decoration-none text-white ms-2">Cerrar Sesión</a>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="text-decoration-none text-white">Iniciar Sesión</a>
+                    <a href="{{ url_for('register') }}" class="text-decoration-none text-white ms-2">Registrarse</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!--BARRA DE BUSQUEDA-->
+    <div class="container" id="header-center">
+        <div class="row align-items-center">
+            <div class="col-12 col-sm-2 col-md-3">
+                <!-- Logo -->
+                <a href="{{ url_for('index') }}"><img src="../static/assets/img/logo/revibes.png" alt="Logo"
+                                                      class="img-fluid"></a>
+                <!--            <a href="#"><img src="assets/img/logo/image.png" alt="Logo" class="img-fluid" style="width: 60px"></a>-->
+            </div>
+            <div class="col-12 col-sm-6 col-md-6">
+                <!-- Barra de búsqueda -->
+                <form id="searchForm" action="{{ url_for('search') }}" method="get">
+                    <div class="input-group">
+                        <input type="search" name="q" class="form-control" placeholder="Buscar">
+                        <button class="btn btn-outline-secondary w-25" type="submit">Buscar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12 col-sm-4 col-md-3 text-end" id="header-center-right">
+                <!-- Iconos -->
+                <button>
+                    <a href="{{ url_for('wishlist') }}" title="Ver tus favoritos">
+                        <svg width="25" height="23" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                    d="M9.9996 16.5451C-6.66672 7.3333 4.99993 -2.6667 9.9996 3.65668C14.9999 -2.6667 26.6666 7.3333 9.9996 16.5451Z"
+                                    stroke="#1A1A1A" stroke-width="1.5" />
+                        </svg>
+                    </a>
+                </button>
+                {% if current_user.is_authenticated %}
+                    <button>
+                        <a href="{{ url_for('chats') }}" title="Chats">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                <path d="M12 2C6.48 2 2 5.92 2 10.5c0 2.04.85 3.94 2.34 5.38-.22 1.32-1.04 3.15-1.06 3.2-.04.08-.07.17-.07.26 0 .28.22.5.5.5.08 0 .16-.02.24-.06.03-.02 1.88-.78 3.22-1.06C8.55 19.63 10.24 20 12 20c5.52 0 10-3.92 10-8.5S17.52 2 12 2zm0 16c-1.59 0-3.13-.34-4.5-.97-.27-.13-.57-.19-.87-.19-.68 0-1.32.24-1.9.48.3-.61.61-1.26.9-1.94.17-.38.09-.82-.21-1.11C3.85 13.03 3 11.81 3 10.5 3 6.92 7.03 4 12 4s9 2.92 9 6.5-4.03 6.5-9 6.5z"/>
+                            </svg>
+                        </a>
+                    </button>
+                {% endif %}
+                <button>
+                    <a href="{{ url_for('upload_product') }}" title="Subir un producto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="23" fill="" viewBox="0 0 16 16">
+                            <path
+                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"
+                                    stroke="#00000" stroke-width="1.5" />
+                            <path
+                                    d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"
+                                    stroke="#00000" stroke-width="1.5" />
+                        </svg>
+                    </a>
+                </button>
+                <button>
+                    <a href="{{ url_for('dashboard') }}" title="Dashboard">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="none" viewBox="0 0 16 16">
+                            <path
+                                    d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z"
+                                    stroke="#1A1A1A" stroke-width="1" />
+                        </svg>
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!--DROPDOWN CATEGORIAS, CARUSEL, PRODUCTOS-->
+    <div class="bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded" id="categorias-navbar">
+            <div class="container-xl">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
+                    <ul class="navbar-nav">
+                        {% for group in groups %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="dropdown{{ group.name }}" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ group.name }}
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown{{ group.name }}">
+                                <div class="d-md-flex align-items-start justify-content-start">
+                                    {% for category in group.categories %}
+                                    <div>
+
+                                        <div class="dropdown-header">{{ category.name }}</div>
+
+                                        {% for subcategory in category.subcategories %}
+                                        <a class="dropdown-item"
+                                            href="{{ url_for('show_items_subcategory', subcategory_id=subcategory.id, subcategory_name=subcategory.name) }}">
+                                            {{ subcategory.name }}
+                                        </a>
+                                        {% endfor %}
+
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{ url_for('contact') }}">Contáctanos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{ url_for('about') }}">Sobre nosotros</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <nav id="breadcrum" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <div class="container mt-3">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('index') }}"><i class="fas fa-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page"><a href="" class="text-decoration-none">Subir
+                            Artículo</a>
+                    </li>
+                </ol>
+            </div>
+        </nav>
+    </div>
+
+    <!--FORMULARIO DE SUBIR PRODUCTOS-->
+    <div class="container mb-5" id="loadProduct">
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col-lg-12 section--xl pt-0">
+                    <div class="container">
+                        <!-- Información del artículo  -->
+                        <div class="text-center justify-content-center mb-4">
+                            <h5 class="fs-2"><strong>Subir artículo</strong></h5>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-7 order-lg-0 order-2">
+                                        <form action="{{ url_for('upload_product') }}" method="POST"
+                                            enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="mb-3">
+                                                    <label for="titulo" class="form-label">Título</label>
+                                                    <input type="text" id="titulo" name="titulo" class="form-control"
+                                                        placeholder="Ejemplo: Camiseta de Calaca Chida" required />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="descripcion" class="form-label">Descripción</label>
+                                                    <textarea class="form-control" id="descripcion" name="descripcion"
+                                                        rows="4"
+                                                        placeholder="Ejemplo: Poco uso, como nuevo, solo conocedores, etc."
+                                                        required></textarea>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="grupo" class="form-label">Grupo</label>
+                                                    <select id="grupo" name="grupo" class="form-select" required>
+                                                        <option selected disabled>Seleccione un grupo</option>
+                                                        {% for grupo in grupos %}
+                                                        <option value="{{ grupo.id }}">{{ grupo.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="categoria" class="form-label">Categoría</label>
+                                                    <select id="categoria" name="categoria" class="form-select"
+                                                        required>
+                                                        <option selected disabled>Seleccione una categoría</option>
+                                                        {% for categoria in categorias %}
+                                                        <option value="{{ categoria.id }}">{{ categoria.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="subcategoria" class="form-label">Subcategoría</label>
+                                                    <select id="subcategoria" name="subcategoria" class="form-select"
+                                                        required>
+                                                        <option selected disabled>Seleccione una subcategoría</option>
+                                                        {% for subcategoria in subcategorias %}
+                                                        <option value="{{ subcategoria.id }}">{{ subcategoria.name }}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="marca" class="form-label">Marca</label>
+                                                    <select id="marca" name="marca" class="form-select" required>
+                                                        <option selected disabled>Seleccione una marca</option>
+                                                        {% for marca in marcas %}
+                                                        <option value="{{ marca.id }}">{{ marca.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <input type="text" id="otherBrand" name="otherBrand"
+                                                        class="form-control mt-2" placeholder="Ingrese la marca"
+                                                        style="display: none;" />
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="tamaño" class="form-label">Tamaño</label>
+                                                    <select id="tamaño" name="tamaño" class="form-select" required>
+                                                        <option selected disabled>Seleccione un tamaño</option>
+                                                        {% for tamaño in tamanos %}
+                                                        <option value="{{ tamaño.id }}">{{ tamaño.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="material" class="form-label">Material</label>
+                                                    <select id="material" name="material" class="form-select" required>
+                                                        <option selected disabled>Seleccione un material</option>
+                                                        {% for material in materiales %}
+                                                        <option value="{{ material.id }}">{{ material.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="color" class="form-label">Color</label>
+                                                    <select id="color" name="color" class="form-select" required>
+                                                        <option selected disabled>Seleccione un color</option>
+                                                        {% for color in colores %}
+                                                        <option value="{{ color.id }}">{{ color.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="estado" class="form-label">Estado</label>
+                                                    <select id="estado" name="estado" class="form-select" required>
+                                                        <option selected disabled>Seleccione un estado</option>
+                                                        {% for estado in estados %}
+                                                        <option value="{{ estado.id }}">{{ estado.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="ubicacion" class="form-label">Ubicación</label>
+                                                    <input type="text" id="ubicacion" name="ubicacion"
+                                                        class="form-control" placeholder="Ejemplo: Cuenca, Totoracocha"
+                                                        required />
+                                                </div>
+                                                <div class="col-md-4 contact-form-input">
+                                                    <label for="precio" class="form-label fs-6">Precio</label>
+                                                    <div class="input-group" id="precio">
+                                                        <span class="input-group-text">$</span>
+                                                        <input type="number" id="precio" name="precio"
+                                                            class="form-control" placeholder="0.00" step="0.01" />
+                                                    </div>
+                                                </div>
+                                                <!--CARGA DE IMAGENES-->
+                                                <div>
+                                                    <div class="btn btn-outline-primary mb-3" id="uploadButton"
+                                                        style="position: relative;">
+                                                        <label for="images" class="form-label">Fotos del
+                                                            producto</label>
+                                                        <input type="file" id="imageUpload" name="images"
+                                                            accept=".png, .jpg, .jpeg" multiple class="form-control"
+                                                            onchange="previewImages(event)" />
+                                                    </div>
+                                                </div>
+                                                <div class="container text-center">
+                                                    <button class="btn btn-secondary" type="submit">Guardar</button>
+                                                    <button class="btn btn-primary" type="submit">Subir</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-3 order-lg-0 order-1 mb-3">
+                                        <div id="errorMessage" class="error-message"></div>
+                                        <div class="container-fluid h-100 mb-3">
+                                            <div class="container-fluid mb-3 row" id="imagePreviewContainer">
+                                                <!-- Las imágenes seleccionadas se mostrarán aquí -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-lg-5 order-lg-0 order-1 mb-3">
+                                    <div class="container-fluid h-100 mb-3">
+                                        <form class="border h-100 text-center align-content-center" enctype="multipart/form-data">
+                                            <div class="container-fluid mb-3 row" id="contenedorFotos">
+                                            </div>
+                                            <div class="btn btn-outline-primary mb-3" id="uploadButton"
+                                                 style="position: relative;">
+                                                <input type='file' id="imageUpload" name="fotos" accept=".png, .jpg, .jpeg" multiple/>
+                                                <label for="imageUpload" id="lblimgup" class="text-white"
+                                                       style="position: relative; z-index: 1;">Subir fotos</label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--CHATBOT-->
+    <div id="chatbot-container">
+        <div class="chat-button" id="chat-button"></div>
+        <div class="chat-container" id="chat-container">
+            <div class="chat-title">
+                ChatBot
+                <button id="clear-chat" class="btn btn-danger">Borrar Conversación</button>
+                <i class="fas fa-times" id="close-chat"></i>
+            </div>
+            <div class="conversation" id="conversation">
+                <!-- Conversación del chat -->
+            </div>
+            <form class="message-form" id="message-form">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="message-input" placeholder="Escribe un mensaje...">
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!--FOOTER-->
+    <footer class="text-center text-lg-start text-white" style="background-color: #948979">
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">
+                        <a href="{{ url_for('about') }}" class="text-white text-decoration-none">Re-Vibe</a>
+                    </h6>
+                    <p>
+                        Somos tu destino para moda nueva y usada en línea. Aquí, hacemos lo que queremos: exploramos
+                        estilos
+                        únicos y redefinimos la moda.
+                    </p>
+                </div>
+                <hr class="w-100 d-md-none">
+                <hr class="w-100 d-md-none">
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">
+                        <a href="{{ url_for('contact') }}" class="text-white text-decoration-none">Contáctanos</a>
+                    </h6>
+                    <p><i class="fas fa-home mr-3"></i> Cuenca, Azuay 010101, EC</p>
+                    <p>
+                        <a href="mailto:soporte.revibe.ec@gmail.com" class="text-white text-decoration-none">
+                            <i class="fas fa-envelope mr-3"></i> soporte.revibe.ec@gmail.com
+                        </a>
+                    </p>
+                    <p><a href="https://wa.link/r4o94u" target="_blank" class="text-white text-decoration-none"><i
+                                class="fas fa-phone mr-3"></i> +593 96 900 5822</a></p>
+                    <p><a href="https://wa.link/r4o94u" target="_blank" class="text-white text-decoration-none"><i
+                                class="fas fa-phone mr-3"></i> +593 99 551 3071</a></p>
+                    <p><a href="https://wa.link/r4o94u" target="_blank" class="text-white text-decoration-none"><i
+                                class="fas fa-phone mr-3"></i> +593 96 902 4827</a></p>
+                </div>
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Síguenos</h6>
+                    <div class="d-flex justify-content-center">
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-google"></i></a>
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            Re-Vibe &copy; 2024. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        function previewImages(event) {
+
+            console.log(event.target.files);
+
+            const container = document.getElementById('imagePreviewContainer');
+            const errorMessage = document.getElementById('errorMessage');
+            const files = event.target.files;
+            const existingImages = container.getElementsByTagName('img');
+            const totalImages = existingImages.length + files.length;
+
+            // Limpia el mensaje de error
+            errorMessage.textContent = '';
+
+            if (totalImages < 1) {
+                errorMessage.textContent = 'Debe seleccionar al menos 1 imagen.';
+                return;
+            }
+            if (totalImages > 4) {
+                errorMessage.textContent = 'No puede seleccionar más de 4 imágenes en total.';
+                return;
+            }
+
+            for (const file of files) {
+                if (!file.type.startsWith('image/')) continue;
+
+                // Verifica si la imagen ya está en el contenedor
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const isDuplicate = Array.from(existingImages).some(img => img.src === e.target.result);
+
+                    if (!isDuplicate) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+
+                        const div = document.createElement('div');
+                        div.classList.add('img-preview');
+
+                        const button = document.createElement('button');
+                        button.classList.add('remove-img');
+                        button.textContent = 'x';
+                        button.onclick = function () {
+                            container.removeChild(div);
+                            // Actualiza el input de archivos si es necesario
+                            updateFileInput();
+                        };
+
+                        div.appendChild(img);
+                        div.appendChild(button);
+                        container.appendChild(div);
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function updateFileInput() {
+            const container = document.getElementById('imagePreviewContainer');
+            const fileInput = document.getElementById('imageUpload');
+            const dataTransfer = new DataTransfer();
+            const currentFiles = fileInput.files;
+
+            for (const file of currentFiles) {
+                const imgElement = Array.from(container.getElementsByTagName('img')).find(img => img.src.includes(file.name));
+                if (imgElement) {
+                    dataTransfer.items.add(file);
+                }
+            }
+
+            fileInput.files = dataTransfer.files;
+        }
+    </script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js-be/loadProduct.js') }}"></script>
+    <script src="{{ url_for('static', filename='js-be/chatbot.js') }}"></script>
+</body>
+
+</html>

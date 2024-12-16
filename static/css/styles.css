@@ -1,0 +1,775 @@
+*::after,
+*::before,
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*:root{*/
+/*    --btn-primary: red;*/
+/*}*/
+
+body {
+    /*font-family: "Poppins", sans-serif;*/
+    /*display: flex;*/
+    /*min-height: 500vh;*/
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/**Loader*/
+.loader {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
+
+/*Fin loader*/
+
+/* After Header*/
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-size: 12px;
+    height: 50px;
+    background-color: #B0A695;
+    /*width: 100%;*/
+    color: white; /* Color del texto */
+}
+/*Fin After Header*/
+
+.btn {
+    background-color: #DAD4B2;
+    border: #DAD4B2;
+    color: white;
+}
+
+button {
+    margin: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+/*Header Center*/
+#header-center {
+    padding: 24px 0px;
+}
+
+#header-center img {
+    width: 120px;
+    margin-right: 10px;
+}
+
+#header-center-right a {
+    padding-right: 10px;
+    padding-left: 10px;
+    border-right: 1px solid #cccccc;
+}
+
+.input-group button {
+    /*border: 1px solid #E6E6E6;*/
+    /*background-color: #DAD4B2;*/
+    /*color: white;*/
+    /*font-weight: bold;*/
+}
+/*Fin Header Center*/
+/*Inicio Breadcrumb*/
+
+#breadcrum {
+    /*width: 100%; !* Ocupa todo el ancho de la página *!*/
+    height: 100px; /* Ajusta este valor según tus necesidades */
+    background-image: url('../assets/img/breadcrum/breadcrum.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#breadcrum .fas {
+    color: #575252; /* Cambia el color del icono a blanco */
+}
+#breadcrum .breadcrumb-item::before {
+    color: #575252; /* Cambia el color del separador a blanco */
+}
+/*#breadcrum .breadcrumb-item.active a {*/
+/*    color: #535f9f; !* Cambia el color del texto a blanco *!*/
+/*}*/
+/*Fin Breadcrum*/
+
+/********************INICIO HOME*********************************************/
+/*Carrusel 1 Home*/
+.carousel-img {
+    width: 100%;
+    height: 480px;
+    /*height: 100%;*/
+    /*height: auto;*/
+    /*object-fit: cover;*/
+    object-fit: scale-down;
+}
+/*Fin Carrusel 1 Home*/
+
+/*Productos Home*/
+
+.nav-pills .nav-link {
+    color: #000;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .nav-link:hover,
+.nav-pills .nav-link:focus {
+    background-color: transparent; /* Eliminar el fondo azul */
+    color: #DAD4B2; /* Cambiar el color del texto */
+}
+
+.nav-pills .nav-link.active::after,
+.nav-pills .nav-link:hover::after,
+.nav-pills .nav-link:focus::after {
+    content: '';
+    display: block;
+    width: 100%;
+    border-bottom: 2px solid #DAD4B2; /* Subrayar la pestaña activa */
+    margin-top: 0.50rem; /* Espacio entre el texto y la línea */
+}
+
+.card-img-top {
+    width: 100%;
+    height: 75%;
+    /*object-fit: cover;*/
+    /*object-position: center;*/
+    object-fit: scale-down;
+}
+
+#home-products .card {
+    height: 300px; /* Ajusta este valor según tus necesidades */
+    margin-bottom: 30px; /* Ajusta este valor según tus necesidades */
+}
+/*Inicio heart-icon*/
+.heart-icon {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: #ccc; /* Color del corazón cuando no está lleno */
+    cursor: pointer;
+    font-size: 2em;
+}
+
+.heart-icon.filled {
+    color: red; /* Color del corazón cuando está lleno */
+}
+.heart-icon:hover {
+    transform: scale(1.2);
+}
+/*Fin heart-icon*/
+/*FIN productos HOME*/
+
+/* Inicio 3 publicidad*/
+#rowPublicidad .card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    /*padding: 10px;*/
+}
+
+#rowPublicidad .card {
+    height: 250px; /* Ajusta este valor según tus necesidades */
+    margin-bottom: 30px; /* Ajusta este valor según tus necesidades */
+}
+
+/* Fin 3 publicidad*/
+
+/* Inicio Vender ya*/
+.centered-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.text-large {
+    font-size: 2em; /* Ajusta este valor según tus necesidades */
+    color: #A79277; /* Cambia el color a rojo */
+}
+
+.text-small {
+    font-size: 1em; /* Ajusta este valor según tus necesidades */
+    color: #B4B4B8; /* Cambia el color a azul */
+}
+
+.vertical-stack {
+    flex-direction: column;
+}
+
+/* Fin Vender ya*/
+
+/* Inicio Carrusel Opiniones*/
+.carousel-item {
+    text-align: center; /* Centra el texto y las imágenes */
+}
+
+#opiniones .carousel-item img {
+    width: 50px; /* Ajusta el tamaño de las imágenes */
+    height: 50px;
+    object-fit: cover;
+}
+
+#opiniones .card {
+    margin: 20px; /* Ajusta este valor según tus necesidades */
+    text-align: center; /* Centra el texto y las imágenes */
+    height: 200px;
+    border: white;
+}
+
+#opiniones-titulo {
+    text-align: center; /* Centra el título */
+    font-weight: bold; /* Hace el título en negrita */
+    padding-top: 50px;
+}
+
+.opinion-icon {
+    color: #DAD4B2; /* Cambia esto al color que prefieras */
+    margin-bottom: 15px; /* Ajusta este valor según tus necesidades */
+}
+
+.role-text {
+    font-size: 0.8em; /* Hace el texto más pequeño */
+    color: #999; /* Cambia el color del texto a un gris más débil */
+}
+
+.name-text {
+    margin-bottom: 0; /* Elimina el margen inferior */
+}
+
+#opiniones {
+    padding-bottom: 40px;
+}
+/*Fin Opiniones*/
+
+/*Inicio Footer*/
+.icon {
+    color: white;
+    /*width: 100%;*/
+    /*height: auto;*/
+    font-size: 24px; /* Ajusta este valor según tus necesidades */
+}
+
+footer{
+    margin-top: auto;
+}
+
+/*.icon-space {*/
+/*    margin-bottom: 15px; !* Ajusta este valor según tus necesidades *!*/
+/*}*/
+.footer__copyright-text {
+    font-size: 14px;
+    color: #ffffff;
+}
+/*Fin footer*/
+/********************FIN HOME*********************************************/
+/*Inicio whishlist*/
+#wishlist .card {
+    height: 300px; /* Ajusta este valor según tus necesidades */
+    margin-bottom: 30px; /* Ajusta este valor según tus necesidades */
+}
+
+#misProductos .card {
+    height: 500px; /* Ajusta este valor según tus necesidades */
+    margin-bottom: 30px; /* Ajusta este valor según tus necesidades */
+}
+/*Fin whishlist*/
+
+/*Inicio Checkout*/
+
+/*#checkout-info .card{*/
+/*    height: 500px;*/
+/*    !*margin-bottom: 30px;*!*/
+/*}*/
+
+/*#checkout-info .card-img-top {*/
+/*    width: 100%;*/
+/*    height: 40%;*/
+/*    !*object-fit: cover;*!*/
+/*    !*object-position: center;*!*/
+/*    object-fit: scale-down;*/
+/*}*/
+/*Fin Checkout*/
+
+/* Inicio product-detail*/
+/*#product-detail .card-img-fluidd {*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    object-fit: cover;*/
+/*    object-position: center;*/
+/*    !*padding: 10px;*!*/
+/*}*/
+
+/*#product-detail .card {*/
+/*    height: 250px; !* Ajusta este valor según tus necesidades *!*/
+/*    margin-bottom: 30px; !* Ajusta este valor según tus necesidades *!*/
+/*}*/
+.product-image {
+    width: 100%;
+    height: 100px; /* Ajusta este valor según tus necesidades */
+    object-fit: contain;
+    transition: all;
+}
+
+.product-image:hover {
+    transform: scale(1.1);
+}
+.product-image-main {
+    width: 100%;
+    height: 500px; /* Ajusta este valor según tus necesidades */
+    object-fit: contain;
+}
+
+#product-details .card{
+    height: 575px;
+    /*margin-bottom: 30px;*/
+}
+#product-details .card-body-t{
+    height: 100px;
+    padding: 0.55rem;
+}
+
+#card-user-product-detail .card{
+    height: 160px;
+    /*margin-bottom: 30px;*/
+}
+
+#card-user-product-detail .prof-img img {
+    margin-right: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    width: 50px;
+    height: 50px;
+}
+
+/* Fin 3 product-detail*/
+
+/*Inicio CHONY load-product*/
+#loadProduct .img-flechaVolver {
+    width: 20px;
+    height: 10px;
+}
+
+#loadProduct .cardImagen {
+    width: 100%;
+    height: 90px;
+    max-height: 120px;
+}
+
+#loadProduct .imgFotoArticulo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#loadProduct .botonEliminar, .botonRotar {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Agrega una sombra al botón */
+}
+
+#loadProduct .card-body {
+    overflow: hidden;  /* Oculta cualquier contenido que se salga del contenedor */
+}
+
+#loadProduct .botonEliminar {
+    right: 5px;
+    top: 5px;
+}
+
+#loadProduct .botonRotar {
+    right: 5px;
+    bottom: 5px;
+}
+
+#loadProduct .botonEliminar, .botonRotar {
+    border-radius: 15%;
+}
+
+#loadProduct .img.botonEliminar {
+    width: 20px;
+    height: 20px;
+}
+
+#loadProduct .icono {
+    width: 30px;
+    height: 30px;
+}
+#loadProduct .dropdown-menu {
+    min-width: 100%; /* O cualquier otro valor que se ajuste a tus necesidades */
+}
+
+#loadProduct #imageUpload{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+}
+#loadProduct #lblimgup{cursor: pointer}
+#uploadButton{
+    cursor: pointer;}
+/*Fin CHONY load-product*/
+
+/*Inicio User Details*/
+#products-user .card {
+    height: 300px; /* Ajusta este valor según tus necesidades */
+    margin-bottom: 30px; /* Ajusta este valor según tus necesidades */
+}
+#products-user .product-rating{
+
+    font-size: 50px;
+}
+
+#products-user .stars i{
+
+    font-size: 18px;
+    color: gold;
+}
+
+#reseñas .card{
+    height: 150px;
+    border-color: transparent;
+    /*margin-bottom: 30px;*/
+}
+/*Fin User Details*/
+/* user-dashboard.html */
+
+#imagenUsuarioDashboard {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* order-history.html */
+
+#itemsTabla td {
+    width: 20%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* account-settings.html */
+#imagenUsuarioConfiguracion {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.verContraseña img {
+    width: 20px;
+    height: 20px;
+}
+
+/*Inicio Chat*/
+/*#chat {*/
+/*    height: 600px;*/
+/*    !*border: 1px solid #000;*!*/
+/*}*/
+
+/*#chat .user-container {*/
+/*    max-height: 600px; !* Ajusta este valor según tus necesidades *!*/
+/*    overflow-y: auto;*/
+/*    border: 1px solid red;*/
+/*}*/
+
+/*#chat .message-container {*/
+/*    overflow-y: auto;*/
+/*    !*height: calc(650px - 150px);*!*/
+/*    !*height: 500px;*!*/
+/*    max-height: 482px;*/
+/*}*/
+#chat .msg-container {
+    height: 500px; /* Ajusta este valor según tus necesidades */
+    overflow: auto;
+    /*border: 1px solid #d3d3d3;*/
+}
+#chat .input-container {
+    position: sticky;
+    bottom: 0;
+    /*background: white;*/
+    padding: 10px 0;
+    display: none; /* o flex, dependiendo de tu diseño */
+    /*border: 1px solid green;*/
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.message-container {
+    height: 400px; /* Ajusta este valor según tus necesidades */
+    overflow: auto;
+    /*border: 1px solid blue;*/
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.user-container{
+    height: 436px; /* Ajusta este valor según tus necesidades */
+    overflow: auto;
+    cursor: pointer;
+    /*border: 1px solid #d3d3d3;*/
+}
+#chat .list-group-item {
+    background-color: transparent; /* Reemplaza #yourColor con el color que desees */
+}
+#chat .input-buscar {
+    position: sticky;
+    top: 0;
+}
+
+.user-container::-webkit-scrollbar,
+.message-container::-webkit-scrollbar {
+    display: none;
+}
+
+.user-container,
+.message-container {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+/*#chat .input-container {*/
+/*    !*position: sticky;*!*/
+/*    bottom: 0;*/
+/*    background: white;*/
+/*    padding: 10px 0;*/
+/*    display: none;*/
+/*}*/
+
+#chat .message .time {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+#chat .contact-name {
+    /*background-color: #f8f9fa; !* Cambia el color de fondo según tus preferencias *!*/
+    margin-bottom: 0px; /* Ajusta el margen según tus necesidades */
+    margin-top: 0;
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
+}
+
+#chat .message.sent {
+    text-align: right;
+}
+
+#chat .message.received {
+    text-align: left;
+}
+/*Fin Chat*/
+/* user-dashboard.html */
+
+#imagenUsuarioDashboard {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* order-history.html */
+
+#itemsTabla td {
+    width: 20%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Inicio account-settings.html */
+#imagenUsuarioConfiguracion {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.verContraseña img {
+    width: 20px;
+    height: 20px;
+}
+
+.icono-account {
+    width: 30px;
+    height: 30px;
+}
+/*Fin account-settings.html*/
+
+/*Inicio Sign-in*/
+/*Form floating*/
+.form-floating {
+    gap: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.form-floating>div {
+    margin-right: 10px;
+    /* Espacio entre los elementos */
+}
+/*Fin Form floating*/
+/*Fin Sign-in*/
+
+/*Inicio Chatbot*/
+
+/* Estilo para el botón circular */
+#chatbot-container .chat-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #b2b8da;
+    color: white;
+    text-align: center;
+    line-height: 60px;
+    cursor: pointer;
+    z-index: 1000;
+    /* Asegura que esté por encima de otros elementos */
+}
+#chatbot-container .chat-button {
+    background-image: url('../assets/img/chatbot/chatbot.png'); /* Reemplaza 'ruta/a/tu/imagen.jpg' con la ruta a tu imagen */
+    background-size: cover; /* Asegura que la imagen cubra todo el botón */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+/* Estilo para el chat abierto */
+#chatbot-container .chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    height: auto;
+    max-height: 400px;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    display: none;
+    z-index: 999;
+    /* Asegura que esté por encima del botón */
+    padding: 10px;
+}
+
+/* Estilo para el área de conversación */
+#chatbot-container .conversation {
+    height: 300px;
+    overflow-y: scroll;
+    padding-bottom: 20px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+/* Estilo para el formulario de mensajes */
+#chatbot-container .message-form {
+    margin-top: 10px;
+}
+
+/* Estilo para iconos */
+#chatbot-container .fas {
+    cursor: pointer;
+}
+
+/* Estilo para el botón de cerrar */
+/* .close-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+} */
+
+#chat-container .chat-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+#chat-container .input-group {
+    display: flex;
+    align-items: center;
+}
+
+#chat-container .input-group .form-control {
+    flex: 1;
+    margin-right: 10px;
+    /* Espacio entre el input y el botón */
+}
+
+/*Fin Chatbot*/
+
+/*Inicio shop*/
+#cont-shop .card {
+    height: 300px; /* Ajusta este valor según tus necesidades */
+    margin-bottom: 30px; /* Ajusta este valor según tus necesidades */
+}
+/*#shop-products {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    height: 148vh; !* Ajusta esto según sea necesario *!*/
+/*}*/
+
+.product-list {
+    flex-grow: 1;
+    overflow: auto;
+}
+#page-info {
+    text-align: right;
+}
+/*Fin shop*/
+/*#order-details .card {*/
+/*    height: 300px; !* Ajusta este valor según tus necesidades *!*/
+/*    margin-bottom: 30px; !* Ajusta este valor según tus necesidades *!*/
+/*}*/
+
+/*inicio contact*/
+
+#contact svg{
+    fill: #DAD4B2;
+}
+
+/*fin contact*/
+/*inicio about*/
+#about .logo-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+#about .logo-container img {
+    width: 500px;
+    height: 100%;
+}
+
+#about .description {
+    text-align: justify;
+    margin-top: 50px;
+    font-size: 20px;
+}
+/*fin about*/
+
+/*ESTILO CHAT BOT*/

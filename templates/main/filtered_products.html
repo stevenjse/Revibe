@@ -1,0 +1,23 @@
+<div class="row">
+    {% for product in productos %}
+        <div class="col-sm-6 col-md-4">
+            <a href="{{ url_for('product_detail', product_id=product.id, seller_id=product.user_id) }}" class="text-decoration-none text-black">
+                <div class="card position-relative">
+                    <button class="wishlist-btn btn btn-link position-absolute top-0 end-0 m-2" data-product-id="{{ product.id }}">
+                        <i class="fa fa-heart {% if product.id in wishlist_product_ids %}text-danger{% else %}text-muted{% endif %}"></i>
+                    </button>
+                    {% if product.fotos %}
+                        {% set first_foto = product.fotos.split(',')[0] %}
+                        <img src="{{ url_for('static', filename='uploads/' ~ first_foto) }}" class="card-img-top" alt="{{ product.title }}">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='uploads/default.jpg') }}" class="card-img-top" alt="Imagen predeterminada">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.title }}</h5>
+                        <p class="card-text">{{ product.price }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>

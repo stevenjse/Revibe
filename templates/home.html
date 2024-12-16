@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Re-Vibe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="static/assets/img/logo/revibes.svg">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="static/css/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .position-relative {
+            position: relative;
+        }
+        .position-absolute {
+            position: absolute;
+        }
+        .top-0 {
+            top: 0;
+        }
+        .end-0 {
+            right: 0;
+        }
+        .m-2 {
+            margin: 0.5rem;
+        }
+        .wishlist-btn {
+            background: none;
+            border: none;
+        }
+        .wishlist-btn i {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!--HEADER-->
+    <header class="top-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-6 col-sm-6 col-md-3">
+                    <a>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10" />
+                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                        </svg>
+                        Cuenca, Ecuador, 010101
+                    </a>
+                </div>
+                <div class="col-6 col-sm-6 col-md-3 ms-auto text-end">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('dashboard')}}" class="text-decoration-none text-white">{{ current_user.nombre }}</a>
+                    <a href="{{ url_for('logout') }}" class="text-decoration-none text-white ms-2">Cerrar Sesión</a>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="text-decoration-none text-white">Iniciar Sesión</a>
+                    <a href="{{ url_for('register') }}" class="text-decoration-none text-white ms-2">Registrarse</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!--BARRA DE BUSQUEDA-->
+    <div class="container" id="header-center">
+        <div class="row align-items-center">
+            <div class="col-12 col-sm-2 col-md-3">
+                <!-- Logo -->
+                <a href="{{ url_for('index') }}"><img src="static/assets/img/logo/revibes.png" alt="Logo"
+                        class="img-fluid"></a>
+                <!--            <a href="#"><img src="assets/img/logo/image.png" alt="Logo" class="img-fluid" style="width: 60px"></a>-->
+            </div>
+            <div class="col-12 col-sm-6 col-md-6">
+                <!-- Barra de búsqueda -->
+                <form id="searchForm" action="{{ url_for('search') }}" method="get">
+                    <div class="input-group">
+                        <input type="search" name="q" class="form-control" placeholder="Buscar">
+                        <button class="btn btn-outline-secondary w-25" type="submit">Buscar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12 col-sm-4 col-md-3 text-end" id="header-center-right">
+                <!-- Iconos -->
+                <button>
+                    <a href="{{ url_for('wishlist') }}" title="Ver tus favoritos">
+                        <svg width="25" height="23" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                    d="M9.9996 16.5451C-6.66672 7.3333 4.99993 -2.6667 9.9996 3.65668C14.9999 -2.6667 26.6666 7.3333 9.9996 16.5451Z"
+                                    stroke="#1A1A1A" stroke-width="1.5" />
+                        </svg>
+                    </a>
+                </button>
+                {% if current_user.is_authenticated %}
+                    <button>
+                        <a href="{{ url_for('chats') }}" title="Chats">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                <path d="M12 2C6.48 2 2 5.92 2 10.5c0 2.04.85 3.94 2.34 5.38-.22 1.32-1.04 3.15-1.06 3.2-.04.08-.07.17-.07.26 0 .28.22.5.5.5.08 0 .16-.02.24-.06.03-.02 1.88-.78 3.22-1.06C8.55 19.63 10.24 20 12 20c5.52 0 10-3.92 10-8.5S17.52 2 12 2zm0 16c-1.59 0-3.13-.34-4.5-.97-.27-.13-.57-.19-.87-.19-.68 0-1.32.24-1.9.48.3-.61.61-1.26.9-1.94.17-.38.09-.82-.21-1.11C3.85 13.03 3 11.81 3 10.5 3 6.92 7.03 4 12 4s9 2.92 9 6.5-4.03 6.5-9 6.5z"/>
+                            </svg>
+                        </a>
+                    </button>
+                {% endif %}
+                <button>
+                    <a href="{{ url_for('upload_product') }}" title="Subir un producto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="23" fill="" viewBox="0 0 16 16">
+                            <path
+                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"
+                                    stroke="#00000" stroke-width="1.5" />
+                            <path
+                                    d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"
+                                    stroke="#00000" stroke-width="1.5" />
+                        </svg>
+                    </a>
+                </button>
+                <button>
+                    <a href="{{ url_for('dashboard') }}" title="Dashboard">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="none" viewBox="0 0 16 16">
+                            <path
+                                    d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z"
+                                    stroke="#1A1A1A" stroke-width="1" />
+                        </svg>
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!--DROPDOWN CATEGORIAS, CARUSEL, PRODUCTOS-->
+    <div class="bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded" id="categorias-navbar">
+            <div class="container-xl">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
+                    <ul class="navbar-nav">
+                        {% for group in groups %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="dropdown{{ group.name }}" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ group.name }}
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown{{ group.name }}">
+                                <div class="d-md-flex align-items-start justify-content-start">
+                                    {% for category in group.categories %}
+                                    <div>
+
+                                        <div class="dropdown-header">{{ category.name }}</div>
+
+                                        {% for subcategory in category.subcategories %}
+                                        <a class="dropdown-item"
+                                            href="{{ url_for('show_items_subcategory', subcategory_id=subcategory.id, subcategory_name=subcategory.name) }}">
+                                            {{ subcategory.name }}
+                                        </a>
+                                        {% endfor %}
+
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{ url_for('contact') }}">Contáctanos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{ url_for('about') }}">Sobre nosotros</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container" style="max-width: 700px; margin-top: 30px" id="carruselPubli">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <a href="https://camisetaspendejas.mx/products/un_verdadero_hombre_nunca_habla_mal_de_lopez_obrador"
+                            target="_blank">
+                            <img src="https://www.sdpnoticias.com/resizer/v2/2SO3VVT555HF7NTNRUWMGH4BIE.jpeg?smart=true&auth=bcc5fd6c7d2bfa2608df627a8c4c3612de603d81b14d10f4f62d53e190994a73&width=640&height=360"
+                                class="d-block w-100 carousel-img" alt="First slide">
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="https://www.footlocker.com/product/~/Q4796800.html" target="_blank">
+                            <img src="https://images.footlocker.com/is/image/EBFL2/Q4796800_01?wid=500&hei=500&fmt=png-alpha"
+                                class="d-block  w-100 carousel-img" alt="Second slide">
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="https://www.adidas.com/us/ae-1-georgia-red-clay-basketball-shoes/IF1863.html"
+                            target="_blank">
+                            <img src="https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2023%2F09%2Fadidas-ae1-anthony-edwards-first-signature-sneaker-release-info-000.jpg?w=960&cbr=1&q=90&fit=max"
+                                class="d-block w-100 carousel-img" alt="Third slide">
+                        </a>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="container-xxl mt-3" id="home-products">
+            <div class="row">
+                {% for product in productos %}
+                    <div class="col-sm-6 col-md-4">
+                        <a href="{{ url_for('product_detail', product_id=product.id, seller_id=product.user_id) }}" class="text-decoration-none text-black">
+                            <div class="card position-relative">
+                                <button class="wishlist-btn btn btn-link position-absolute top-0 end-0 m-2" data-product-id="{{ product.id }}">
+                                    <i class="fa fa-heart {% if product.id in wishlist_product_ids %}text-danger{% else %}text-muted{% endif %}"></i>
+                                </button>
+                                {% if product.fotos %}
+                                    {% set first_foto = product.fotos.split(',')[0] %}
+                                    <img src="{{ url_for('static', filename='uploads/' ~ first_foto) }}" class="card-img-top" alt="{{ product.title }}">
+                                {% else %}
+                                    <img src="{{ url_for('static', filename='uploads/default.jpg') }}" class="card-img-top" alt="Imagen predeterminada">
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ product.title }}</h5>
+                                    <p class="card-text">{{ product.price }}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!--PUBLICIDAD-->
+    <div class="container mt-5">
+        <div class="row" id="rowPublicidad">
+            <div class="col-md-4">
+                <a href="https://www.marathon.store/ec" target="_blank">
+                    <div class="card position-relative">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Marathon_blue_logo.png"
+                             class="card-img-top" style="object-fit: contain">
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="https://www.etafashion.com" target="_blank">
+                    <div class="card position-relative">
+                        <img src="https://scalashopping.com/wp-content/uploads/2018/08/logo-etafashion.jpg"
+                             class="card-img-top" style="object-fit: contain">
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="https://www.venus.com.ec" target="_blank">
+                    <div class="card position-relative">
+                        <img src="https://www.venus.com.ec/pub/media/logo/stores/1/Logo_Venus.png"
+                            class="card-img-top" style="object-fit: contain">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!--PUBLICIDAD PAGINA-->
+    <div class="bg-light" style="padding-bottom: 20px">
+        <div class="container text-center">
+            <div class="row">
+                <!-- Columna de la izquierda con la imagen -->
+                <div class="col-sm-3 col-md-3">
+                    <img src="https://parspng.com/wp-content/uploads/2023/08/clothespng.parspng.com-9-1024x683.png"
+                        class="centered-image" style="height: 300px" alt="Imagen Izquierda">
+                </div>
+
+                <!-- Columna del medio con el texto y el botón -->
+                <div class="col d-flex align-items-center justify-content-center vertical-stack">
+                    <h2 class="text-large">¿Quieres hacer limpieza de armario?</h2>
+                    <p class="text-small">Aquí hay mucha gente interesada en esto</p>
+                    <a href="{{ url_for('upload_product') }}" class="text-white text-decoration-none"><button
+                            class="btn btn-primary">Vender
+                            ya!</button></a>
+                </div>
+
+                <!-- Columna de la derecha con la imagen -->
+                <div class="col-sm-3 col-md-3">
+                    <img src="https://png.pngtree.com/png-clipart/20231018/original/pngtree-attractive-woman-trying-new-clothing-on-white-casual-picture-image_13179103.png"
+                        class="centered-image" style="height: 300px" alt="Imagen Derecha">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--OPINIONES-->
+    <div class="bg-light">
+        <div class="container" id="opiniones">
+            <h2 id="opiniones-titulo">Lo que opinan nuestros clientes</h2>
+            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row">
+                            <!-- Columna 1 -->
+                            <div class="col-sm-6 col-md-4">
+                                <div class="card">
+                                    <div class="card-body d-flex align-items-center justify-content-center flex-column">
+                                        <i class="fas fa-signature fa-3x opinion-icon"></i> <!-- Icono de usuario -->
+                                        <p>"Excelente página, siempre encuentro lo que busco. 100% recomendado."
+                                        </p>
+                                    </div>
+                                </div>
+                                <img src="https://ici2st.epn.edu.ec/images/ici2st2022/ponentes/Priscila%20Cedillo.png"
+                                    class="rounded-circle" alt="Cliente 1">
+                                <p class="name-text">Priscila Cedillo</p>
+                                <p class="role-text">Comprador</p>
+                            </div>
+                            <!-- Columna 2 -->
+                            <div class="col-sm-6 col-md-4">
+                                <div class="card">
+                                    <div class="card-body d-flex align-items-center justify-content-center flex-column">
+                                        <i class="fas fa-signature fa-3x opinion-icon"></i> <!-- Icono de usuario -->
+                                        <p>"Excelente servicio. Le doy un 30/30."</p>
+                                    </div>
+                                </div>
+                                <img src="https://media.licdn.com/dms/image/D4E03AQGTmO_g5vmZxg/profile-displayphoto-shrink_200_200/0/1711575515941?e=2147483647&v=beta&t=9M6_KAep6Ej0PGCWbIwXPPfF_uoEg6Ejm23kO0PAvzk"
+                                    class="rounded-circle" alt="Cliente 2">
+                                <p class="name-text">Andrea Mory</p>
+                                <p class="role-text">Vendedor</p>
+                            </div>
+                            <!-- Columna 3 -->
+                            <div class="col-sm-6 col-md-4">
+                                <div class="card">
+                                    <div class="card-body d-flex align-items-center justify-content-center flex-column">
+                                        <i class="fas fa-signature fa-3x opinion-icon"></i> <!-- Icono de usuario -->
+                                        <p>"Es una excelente página, cumple todos los estándares de HCI. 30/30 en el examen."
+                                        </p>
+                                    </div>
+                                </div>
+                                <img src="https://i1.rgstatic.net/ii/profile.image/272262511198214-1441923849752_Q512/Otto-Parra.jpg"
+                                    class="rounded-circle" alt="Cliente 3">
+                                <p class="name-text">Otto Parra</p>
+                                <p class="role-text">Comprador</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Agrega más elementos de carrusel según sea necesario -->
+                    <div class="carousel-item">
+                        <div class="row">
+                            <!-- Columna 1 -->
+                            <div class="col-sm-6 col-md-4">
+                                <div class="card">
+                                    <div class="card-body d-flex align-items-center justify-content-center flex-column">
+                                        <i class="fas fa-signature fa-3x opinion-icon"></i> <!-- Icono de usuario -->
+                                        <p>"Me encanta la calidad de los productos, siempre encuentro lo que necesito."
+                                        </p>
+                                    </div>
+                                </div>
+                                <img src="https://i1.sndcdn.com/artworks-000116719590-pmrtyu-t500x500.jpg"
+                                    class="rounded-circle" alt="Cliente 1">
+                                <p class="name-text">Lebron James</p>
+                                <p class="role-text">Comprador</p>
+                            </div>
+                            <!-- Columna 2 -->
+                            <div class="col-sm-6 col-md-4">
+                                <div class="card">
+                                    <div class="card-body d-flex align-items-center justify-content-center flex-column">
+                                        <i class="fas fa-signature fa-3x opinion-icon"></i> <!-- Icono de usuario -->
+                                        <p>"El servicio es muy bueno. Todo cifrado correctamente. Intente hacer un ataque y no pude. 30/30"</p>
+                                    </div>
+                                </div>
+                                <img src="https://media.licdn.com/dms/image/C4D03AQGfs362v0KQQQ/profile-displayphoto-shrink_200_200/0/1517460614816?e=2147483647&v=beta&t=ccb6IFSVn5sNLoHRuG7_3H_cfBfXuY30wE672S3Lr6M"
+                                    class="rounded-circle" alt="Cliente 2">
+                                <p class="name-text">Diego Ponce</p>
+                                <p class="role-text">Vendedor</p>
+                            </div>
+                            <!-- Columna 3 -->
+                            <div class="col-sm-6 col-md-4">
+                                <div class="card">
+                                    <div class="card-body d-flex align-items-center justify-content-center flex-column">
+                                        <i class="fas fa-signature fa-3x opinion-icon"></i> <!-- Icono de usuario -->
+                                        <p>"Gracias a la plataforma, he podido vender mis productos de manera rápida y
+                                            segura."
+                                        </p>
+                                    </div>
+                                </div>
+                                <img src="https://ih0.redbubble.net/image.2990817857.2109/raf,360x360,075,t,fafafa:ca443f4786.jpg"
+                                    class="rounded-circle" alt="Cliente 3">
+                                <p class="name-text">Dwayne Johnson</p>
+                                <p class="role-text">Comprador</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel"-->
+                <!--                    data-bs-slide="prev">-->
+                <!--                <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+                <!--                <span class="visually-hidden">Anterior</span>-->
+                <!--            </button>-->
+                <!--            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel"-->
+                <!--                    data-bs-slide="next">-->
+                <!--                <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+                <!--                <span class="visually-hidden">Siguiente</span>-->
+                <!--            </button>-->
+            </div>
+        </div>
+    </div>
+
+    <!--CHATBOT-->
+    <div id="chatbot-container">
+        <div class="chat-button" id="chat-button"></div>
+        <div class="chat-container" id="chat-container">
+            <div class="chat-title">
+                ChatBot
+                <button id="clear-chat" class="btn btn-danger">Borrar Conversación</button>
+                <i class="fas fa-times" id="close-chat"></i>
+            </div>
+            <div class="conversation" id="conversation">
+                <!-- Conversación del chat -->
+            </div>
+            <form class="message-form" id="message-form">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="message-input" placeholder="Escribe un mensaje...">
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--FOOTER-->
+    <footer class="text-center text-lg-start text-white" style="background-color: #948979">
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">
+                        <a href="{{ url_for('about') }}" class="text-white text-decoration-none">Re-Vibe</a>
+                    </h6>
+                    <p>
+                        Somos tu destino para moda nueva y usada en línea. Aquí, hacemos lo que queremos: exploramos
+                        estilos
+                        únicos y redefinimos la moda.
+                    </p>
+                </div>
+                <hr class="w-100 d-md-none">
+                <hr class="w-100 d-md-none">
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">
+                        <a href="{{ url_for('contact') }}" class="text-white text-decoration-none">Contáctanos</a>
+                    </h6>
+                    <p><i class="fas fa-home mr-3"></i> Cuenca, Azuay 010101, EC</p>
+                    <p>
+                        <a href="mailto:soporte.revibe.ec@gmail.com" class="text-white text-decoration-none">
+                            <i class="fas fa-envelope mr-3"></i> soporte.revibe.ec@gmail.com
+                        </a>
+                    </p>
+                    <p><a href="https://wa.link/r4o94u" target="_blank" class="text-white text-decoration-none"><i
+                                class="fas fa-phone mr-3"></i> +593 96 900 5822</a></p>
+                    <p><a href="https://wa.link/r4o94u" target="_blank" class="text-white text-decoration-none"><i
+                                class="fas fa-phone mr-3"></i> +593 99 551 3071</a></p>
+                    <p><a href="https://wa.link/r4o94u" target="_blank" class="text-white text-decoration-none"><i
+                                class="fas fa-phone mr-3"></i> +593 96 902 4827</a></p>
+                </div>
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Síguenos</h6>
+                    <div class="d-flex justify-content-center">
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-google"></i></a>
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            Re-Vibe &copy; 2024. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!--SCRIPTS-->
+    <script src="static/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/script.js"></script>
+    <script src="static/js/chatbot.js"></script>
+
+    <!-- <script src="static/js/js-be/chatbot.js"></script> -->
+    <script src="static/js-be/chatbot.js"></script>
+    <!-- <script src="static/js/agregar-wishlist.js"></script> -->
+</body>
+
+</html>

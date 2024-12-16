@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Re-Vibe</title>
+    <link rel="icon" href="static/assets/img/logo/revibes.png">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="static/css/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <link rel="stylesheet" href="static/css/css-new/toast.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+
+<body>
+
+    <!--HEADER-->
+    <header class="top-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-6 col-sm-6 col-md-3">
+                    <a>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10" />
+                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                        </svg>
+                        Cuenca, Ecuador, 010101
+                    </a>
+                </div>
+                <div class="col-6 col-sm-6 col-md-3 ms-auto text-end">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('dashboard')}}" class="text-decoration-none text-white">{{ current_user.nombre
+                        }}</a>
+                    <a href="{{ url_for('logout') }}" class="text-decoration-none text-white ms-2">Cerrar Sesión</a>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="text-decoration-none text-white">Iniciar Sesión</a>
+                    <a href="{{ url_for('register') }}" class="text-decoration-none text-white ms-2">Registrarse</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!--BARRA DE BUSQUEDA-->
+    <div class="container" id="header-center">
+        <div class="row align-items-center">
+            <div class="col-12 col-sm-2 col-md-3">
+                <!-- Logo -->
+                <a href="{{ url_for('index') }}"><img src="../static/assets/img/logo/revibes.png" alt="Logo"
+                                                      class="img-fluid"></a>
+                <!--            <a href="#"><img src="assets/img/logo/image.png" alt="Logo" class="img-fluid" style="width: 60px"></a>-->
+            </div>
+            <div class="col-12 col-sm-6 col-md-6">
+                <!-- Barra de búsqueda -->
+                <form id="searchForm" action="{{ url_for('search') }}" method="get">
+                    <div class="input-group">
+                        <input type="search" name="q" class="form-control" placeholder="Buscar">
+                        <button class="btn btn-outline-secondary w-25" type="submit">Buscar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12 col-sm-4 col-md-3 text-end" id="header-center-right">
+                <!-- Iconos -->
+                <button>
+                    <a href="{{ url_for('wishlist') }}" title="Ver tus favoritos">
+                        <svg width="25" height="23" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                    d="M9.9996 16.5451C-6.66672 7.3333 4.99993 -2.6667 9.9996 3.65668C14.9999 -2.6667 26.6666 7.3333 9.9996 16.5451Z"
+                                    stroke="#1A1A1A" stroke-width="1.5" />
+                        </svg>
+                    </a>
+                </button>
+                {% if current_user.is_authenticated %}
+                    <button>
+                        <a href="{{ url_for('chats') }}" title="Chats">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                <path d="M12 2C6.48 2 2 5.92 2 10.5c0 2.04.85 3.94 2.34 5.38-.22 1.32-1.04 3.15-1.06 3.2-.04.08-.07.17-.07.26 0 .28.22.5.5.5.08 0 .16-.02.24-.06.03-.02 1.88-.78 3.22-1.06C8.55 19.63 10.24 20 12 20c5.52 0 10-3.92 10-8.5S17.52 2 12 2zm0 16c-1.59 0-3.13-.34-4.5-.97-.27-.13-.57-.19-.87-.19-.68 0-1.32.24-1.9.48.3-.61.61-1.26.9-1.94.17-.38.09-.82-.21-1.11C3.85 13.03 3 11.81 3 10.5 3 6.92 7.03 4 12 4s9 2.92 9 6.5-4.03 6.5-9 6.5z"/>
+                            </svg>
+                        </a>
+                    </button>
+                {% endif %}
+                <button>
+                    <a href="{{ url_for('upload_product') }}" title="Subir un producto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="23" fill="" viewBox="0 0 16 16">
+                            <path
+                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"
+                                    stroke="#00000" stroke-width="1.5" />
+                            <path
+                                    d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"
+                                    stroke="#00000" stroke-width="1.5" />
+                        </svg>
+                    </a>
+                </button>
+                <button>
+                    <a href="{{ url_for('dashboard') }}" title="Dashboard">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="23" fill="none" viewBox="0 0 16 16">
+                            <path
+                                    d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z"
+                                    stroke="#1A1A1A" stroke-width="1" />
+                        </svg>
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!--DROPDOWN CATEGORIAS-->
+    <div class="bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded" id="categorias-navbar">
+            <div class="container-xl">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
+                    <ul class="navbar-nav">
+                        {% for group in groups %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="dropdown{{ group.name }}" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ group.name }}
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown{{ group.name }}">
+                                <div class="d-md-flex align-items-start justify-content-start">
+                                    {% for category in group.categories %}
+                                    <div>
+
+                                        <div class="dropdown-header">{{ category.name }}</div>
+
+                                        {% for subcategory in category.subcategories %}
+                                        <a class="dropdown-item"
+                                            href="{{ url_for('show_items_subcategory', subcategory_id=subcategory.id, subcategory_name=subcategory.name) }}">
+                                            {{ subcategory.name }}
+                                        </a>
+                                        {% endfor %}
+
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{ url_for('contact') }}">Contáctanos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{ url_for('about') }}">Sobre nosotros</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <nav id="breadcrum" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <div class="container mt-3">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('index') }}"><i class="fas fa-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page"><a href=""
+                            class="text-decoration-none">Iniciar Sesión</a>
+                    </li>
+                </ol>
+            </div>
+        </nav>
+    </div>
+
+    <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+        <div class="container">
+            <div class="row gx-lg-5 align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <h1 class="my-5 display-3 fw-bold ls-tight">
+                        La mejor opción <br />
+                        <span style="color: #b2b8da">para las segundas oportunidades!</span>
+                    </h1>
+                </div>
+
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="card">
+
+                        <!-- Contenedor para los toasts -->
+                        <div id="toastContainer" class="position-absolute top-0 start-50 translate-middle-x p-3"
+                            style="z-index: 1050;">
+                            <!-- Los toasts se añadirán aquí dinámicamente -->
+                        </div>
+
+                        <div class="card-body py-5 px-md-5">
+                            <h2 class="text-center mb-4">Iniciar Sesión</h2>
+                            <form id="loginForm">
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="correo"
+                                        placeholder="Correo Electrónico" required>
+                                    <label for="correo">Correo Electrónico</label>
+                                </div>
+                                <div class="form-floating mb-3 position-relative">
+                                    <input type="password" class="form-control" id="password" name="password"
+                                        placeholder="Contraseña" required>
+                                    <label for="password">Contraseña</label>
+                                    <button id="togglePassword"
+                                        class="btn btn-outline-secondary position-absolute top-50 end-0 translate-middle-y"
+                                        type="button" onclick="togglePasswordVisibility()"
+                                        style="background-color: transparent; color: black">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                </div>
+
+                                <!-- <div class="mb-3">
+                                    <a href="{{ url_for('password_reset') }}" class="text-decoration-none">¿Olvidaste la
+                                        contraseña?</a>
+                                </div> -->
+
+                                <!-- Enlace para abrir el modal -->
+                                <div class="mb-3">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#passwordResetModal"
+                                        class="text-decoration-none">¿Olvidaste la contraseña?</a>
+                                </div>
+
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                                </div>
+                                <hr>
+                                <div class="text-center mt-3">
+                                    <a href="{{ url_for('register') }}" class="text-decoration-none">¿Aun no tienes
+                                        cuenta? Registrate Ahora!</a>
+                                </div>
+                            </form>
+
+                            <!-- Modal de recuperación de contraseña -->
+                            <div class="modal fade" id="passwordResetModal" tabindex="-1"
+                                aria-labelledby="passwordResetModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="passwordResetModalLabel">Recuperar
+                                                Contraseña
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Por favor, introduce tu correo electrónico y te enviaremos una
+                                                contraseña
+                                                temporal.</p>
+                                            <form id="forgotPasswordForm">
+                                                <!-- Contenedor para los toasts -->
+                                                <div id="toastContainer2"
+                                                    class="position-absolute top-0 start-50 translate-middle-x p-3"
+                                                    style="z-index: 1050;">
+                                                    <!-- Los toasts se añadirán aquí dinámicamente -->
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="email" class="form-label">Correo Electrónico</label>
+                                                    <input type="email" placeholder="correo@mail.com"
+                                                        class="form-control" id="email" name="email" required>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Enviar enlace de
+                                                    recuperación</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--CHATBOT-->
+    <div id="chatbot-container">
+        <div class="chat-button" id="chat-button"></div>
+        <div class="chat-container" id="chat-container">
+            <div class="chat-title">
+                ChatBot
+                <button id="clear-chat" class="btn btn-danger">Borrar Conversación</button>
+                <i class="fas fa-times" id="close-chat"></i>
+            </div>
+            <div class="conversation" id="conversation">
+                <!-- Conversación del chat -->
+            </div>
+            <form class="message-form" id="message-form">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="message-input" placeholder="Escribe un mensaje...">
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--FOOTER-->
+    <footer class="text-center text-lg-start text-white" style="background-color: #948979">
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">
+                        <a href="{{ url_for('about') }}" class="text-white text-decoration-none">Re-Vibe</a>
+                    </h6>
+                    <p>
+                        Somos tu destino para moda nueva y usada en línea. Aquí, hacemos lo que queremos: exploramos
+                        estilos
+                        únicos y redefinimos la moda.
+                    </p>
+                </div>
+                <hr class="w-100 d-md-none">
+                <hr class="w-100 d-md-none">
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">
+                        <a href="{{ url_for('contact') }}" class="text-white text-decoration-none">Contáctanos</a>
+                    </h6>
+                    <p><i class="fas fa-home mr-3"></i> Cuenca, Azuay 010101, EC</p>
+                    <p>
+                        <a href="mailto:soporte.revibe.ec@gmail.com" class="text-white text-decoration-none">
+                            <i class="fas fa-envelope mr-3"></i> soporte.revibe.ec@gmail.com
+                        </a>
+                    </p>
+                    <p><a href="https://wa.link/r4o94u" target="_blank" class="text-white text-decoration-none"><i
+                                class="fas fa-phone mr-3"></i> +593 96 900 5822</a></p>
+                    <p><a href="https://wa.link/r4o94u" target="_blank" class="text-white text-decoration-none"><i
+                                class="fas fa-phone mr-3"></i> +593 99 551 3071</a></p>
+                    <p><a href="https://wa.link/r4o94u" target="_blank" class="text-white text-decoration-none"><i
+                                class="fas fa-phone mr-3"></i> +593 96 902 4827</a></p>
+                </div>
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Síguenos</h6>
+                    <div class="d-flex justify-content-center">
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-google"></i></a>
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.facebook.com/ucuenca" target="_blank" class="btn btn-primary"
+                            style="background-color: transparent; width: 40px"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            Re-Vibe &copy; 2024. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script src="static/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="static/js/script.js"></script> -->
+    <script src="static/js/chatbot.js"></script>
+
+    <script src="static/js/js-new/togglePasswords.js"></script>
+    <script src="static/js/js-new/dropdowns.js"></script>
+    <script src="static/js-be/log-in.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="static/js-be/chatbot.js"></script>
+    <script src="static/js-be/forgot-password.js"></script>
+
+</body>
+
+</html>
